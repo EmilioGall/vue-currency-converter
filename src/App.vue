@@ -103,7 +103,7 @@ export default {
       console.log('selectedCurrency2 =', this.selectedCurrency2);
 
       this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
-      
+
     },
 
   },
@@ -120,9 +120,9 @@ export default {
 
       <h1 class="fs-1 text-center text-white">CURRENCY CONVERTER</h1>
 
-      <span class="fs-5 text-white">1,00€ è uguale a</span>
+      <span class="fs-5 text-white">1,00 {{ selectedCurrency1 }} è uguale a</span>
 
-      <span class="fs-2 text-white">0,95 CHF</span>
+      <span class="fs-2 text-white">{{ conversionRate + ' ' + selectedCurrency2 }}</span>
 
       <!-- First Input Group -->
       <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
