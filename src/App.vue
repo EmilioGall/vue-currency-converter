@@ -1,4 +1,8 @@
 <script>
+// Import Axios
+import axios from 'axios';
+
+// Import components
 import CurrencyInput from './components/CurrencyInput.vue';
 
 export default {
@@ -11,8 +15,36 @@ export default {
 
   data() {
     return {
-      //
+
+      currencies: [],
+      amount1: 0,
+      amount2: 0,
+      currency1: 'EUR',
+      currency2: 'USD',
+
     };
+  },
+
+  async created() {
+
+    await this.fetchCurrencies();
+
+  },
+
+  methods: {
+
+    async fetchCurrencies() {
+
+      const response = await axios.get('https://api.frankfurter.app/currencies');
+
+      // console.log('response', response.data);
+
+      this.currencies = Object.keys(response.data);
+      this.currency1 = 'EUR';
+      this.currency2 = 'USD';
+
+    },
+
   },
 
 }
@@ -32,11 +64,11 @@ export default {
       <span class="fs-2 text-white">0,95 CHF</span>
 
       <!-- First Input Group -->
-      <CurrencyInput />
+      <CurrencyInput :currencies="currencies" />
       <!-- /First Input Group -->
 
       <!-- Second Input Group -->
-      <CurrencyInput />
+      <CurrencyInput :currencies="currencies" />
       <!-- /Second Input Group -->
 
     </div>
