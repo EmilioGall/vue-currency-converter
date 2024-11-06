@@ -52,11 +52,11 @@ export default {
 
       const response = await axios.get(`https://api.frankfurter.app/latest?base=${curFrom}&symbols=${curTo}`);
 
-      // console.log('response', response);
+      console.log('response', response);
 
-      this.conversionRate = response.data.rates;
+      this.conversionRate = response.data.rates[curTo];
 
-      console.log('conversionRate =', Object.values(this.conversionRate));
+      console.log('conversionRate =', this.conversionRate, typeof this.conversionRate);
 
     },
 
@@ -64,13 +64,21 @@ export default {
 
       this.amount1 = amount;
 
-      console.log('amount1 =', this.amount1);
+      console.log('amount1 =', this.amount1, typeof this.amount1);
+
+      console.log('conversionRate =', this.conversionRate, typeof this.conversionRate);
+
+      this.amount2 = (this.amount1 * this.conversionRate);
+
+      console.log('amount2 =', this.amount2, typeof this.amount2);
 
     },
 
     updateAmount2(amount) {
 
       this.amount2 = amount;
+
+      this.amount1 = this.amount2/this.conversionRate;
 
       console.log('amount2 =', this.amount2);
 
@@ -112,14 +120,14 @@ export default {
 
       <!-- First Input Group -->
       <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
-        :selectedCurrency="selectedCurrency1" :inputAmount="amount1" @input-change="updateAmount1"
-        @currency-change="updateCurrency1" />
+        :selectedCurrency="selectedCurrency1" v-model:inputAmount="amount1" @input-change="updateAmount1"
+        @currency-change="updateCurrency1" :disabledCurrencies="[selectedCurrency2]"/>
       <!-- /First Input Group -->
 
       <!-- Second Input Group -->
       <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
-        :selectedCurrency="selectedCurrency2" :inputAmount="amount2" @input-change="updateAmount2"
-        @currency-change="updateCurrency2" />
+        :selectedCurrency="selectedCurrency2" v-model:inputAmount="amount2" @input-change="updateAmount2"
+        @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]"/>
       <!-- /Second Input Group -->
 
     </div>
