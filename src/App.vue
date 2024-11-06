@@ -58,6 +58,8 @@ export default {
 
       console.log('conversionRate =', this.conversionRate, typeof this.conversionRate);
 
+      this.amount2 = this.amount1 * this.conversionRate;
+
     },
 
     updateAmount1(amount) {
@@ -78,7 +80,7 @@ export default {
 
       this.amount2 = amount;
 
-      this.amount1 = this.amount2/this.conversionRate;
+      this.amount1 = this.amount2 / this.conversionRate;
 
       console.log('amount2 =', this.amount2);
 
@@ -90,6 +92,8 @@ export default {
 
       console.log('selectedCurrency1 =', this.selectedCurrency1);
 
+      this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
+
     },
 
     updateCurrency2(currency) {
@@ -98,6 +102,8 @@ export default {
 
       console.log('selectedCurrency2 =', this.selectedCurrency2);
 
+      this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
+      
     },
 
   },
@@ -121,13 +127,13 @@ export default {
       <!-- First Input Group -->
       <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
         :selectedCurrency="selectedCurrency1" v-model:inputAmount="amount1" @input-change="updateAmount1"
-        @currency-change="updateCurrency1" :disabledCurrencies="[selectedCurrency2]"/>
+        @currency-change="updateCurrency1" :disabledCurrencies="[selectedCurrency2]" />
       <!-- /First Input Group -->
 
       <!-- Second Input Group -->
       <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
         :selectedCurrency="selectedCurrency2" v-model:inputAmount="amount2" @input-change="updateAmount2"
-        @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]"/>
+        @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]" />
       <!-- /Second Input Group -->
 
     </div>
