@@ -4,6 +4,7 @@ export default {
    props: {
 
       currencies: Array,
+      currenciesList: Array,
 
    },
 
@@ -24,7 +25,7 @@ export default {
 
       <select class="form-select btn btn-outline-light" id="inputGroupSelect01">
 
-         <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+         <option v-for="(currency, i) in currencies" :key="currency" :value="currency">{{ `${currenciesList[i]} (${currency})` }}</option>
 
       </select>
 

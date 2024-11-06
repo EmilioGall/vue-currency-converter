@@ -17,6 +17,7 @@ export default {
     return {
 
       currencies: [],
+      currenciesList: [],
       amount1: 0,
       amount2: 0,
       currency1: 'EUR',
@@ -40,6 +41,7 @@ export default {
       // console.log('response', response.data);
 
       this.currencies = Object.keys(response.data);
+      this.currenciesList = Object.values(response.data);
       this.currency1 = 'EUR';
       this.currency2 = 'USD';
 
@@ -64,11 +66,11 @@ export default {
       <span class="fs-2 text-white">0,95 CHF</span>
 
       <!-- First Input Group -->
-      <CurrencyInput :currencies="currencies" />
+      <CurrencyInput :currencies="currencies" :currenciesList="currenciesList" />
       <!-- /First Input Group -->
 
       <!-- Second Input Group -->
-      <CurrencyInput :currencies="currencies" />
+      <CurrencyInput :currencies="currencies" :currenciesList="currenciesList" />
       <!-- /Second Input Group -->
 
     </div>
