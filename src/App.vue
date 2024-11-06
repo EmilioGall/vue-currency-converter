@@ -16,12 +16,12 @@ export default {
   data() {
     return {
 
-      currencies: [],
-      currenciesList: [],
+      currenciesKeys: [],
+      currenciesValues: [],
       amount1: 0,
       amount2: 0,
-      currency1: 'EUR',
-      currency2: 'USD',
+      selectedCurrency1: 'EUR',
+      selectedCurrency2: 'USD',
 
     };
   },
@@ -40,10 +40,8 @@ export default {
 
       // console.log('response', response.data);
 
-      this.currencies = Object.keys(response.data);
-      this.currenciesList = Object.values(response.data);
-      this.currency1 = 'EUR';
-      this.currency2 = 'USD';
+      this.currenciesKeys = Object.keys(response.data);
+      this.currenciesValues = Object.values(response.data);
 
     },
 
@@ -66,11 +64,11 @@ export default {
       <span class="fs-2 text-white">0,95 CHF</span>
 
       <!-- First Input Group -->
-      <CurrencyInput :currencies="currencies" :currenciesList="currenciesList" />
+      <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues" :selectedCurrency="selectedCurrency1" :inputAmount="amount1"/>
       <!-- /First Input Group -->
 
       <!-- Second Input Group -->
-      <CurrencyInput :currencies="currencies" :currenciesList="currenciesList" />
+      <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues" :selectedCurrency="selectedCurrency2" :inputAmount="amount2"/>
       <!-- /Second Input Group -->
 
     </div>

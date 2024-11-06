@@ -3,8 +3,10 @@ export default {
 
    props: {
 
-      currencies: Array,
-      currenciesList: Array,
+      currenciesKeys: Array,
+      currenciesValues: Array,
+      inputAmount: Number,
+      selectedCurrency: String,
 
    },
 
@@ -21,11 +23,11 @@ export default {
 
    <div class="input-group col-2">
 
-      <input class="btn btn-light" type="number" name="input-number-above" id="input-number-above" value="1">
+      <input class="btn btn-light" type="number" :value="inputAmount">
 
-      <select class="form-select btn btn-outline-light" id="inputGroupSelect01">
+      <select class="form-select btn btn-outline-light">
 
-         <option v-for="(currency, i) in currencies" :key="currency" :value="currency">{{ `${currenciesList[i]} (${currency})` }}</option>
+         <option v-for="(currency, i) in currenciesKeys" :key="currency" :value="currency" :selected="selectedCurrency == currency">{{ `${currenciesValues[i]} (${currency})` }}</option>
 
       </select>
 
