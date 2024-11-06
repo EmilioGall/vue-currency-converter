@@ -70,7 +70,7 @@ export default {
 
       console.log('conversionRate =', this.conversionRate, typeof this.conversionRate);
 
-      this.amount2 = (this.amount1 * this.conversionRate);
+      this.amount2 = (this.amount1 * this.conversionRate).toFixed(2);
 
       console.log('amount2 =', this.amount2, typeof this.amount2);
 
@@ -80,7 +80,7 @@ export default {
 
       this.amount2 = amount;
 
-      this.amount1 = this.amount2 / this.conversionRate;
+      this.amount1 = (this.amount2 / this.conversionRate).toFixed(2);
 
       console.log('amount2 =', this.amount2);
 
