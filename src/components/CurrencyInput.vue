@@ -1,6 +1,12 @@
 <script>
 export default {
 
+   props: {
+
+      currencies: Array,
+
+   },
+
    data() {
       return {
 
@@ -18,9 +24,7 @@ export default {
 
       <select class="form-select btn btn-outline-light" id="inputGroupSelect01">
 
-         <option selected value="1">CurrencyOne</option>
-         <option value="2">CurrencyTwo</option>
-         <option value="3">CurrencyThree</option>
+         <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
 
       </select>
 
