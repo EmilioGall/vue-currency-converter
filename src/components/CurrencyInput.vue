@@ -34,6 +34,22 @@ export default {
 
    },
 
+   watch: {
+
+      inputAmount(newValue) {
+
+         this.amount = newValue;
+
+      },
+
+      selectedCurrency(newValue) {
+
+         this.selectedCurrencyValue = newValue;
+
+      },
+
+   }
+
 }
 </script>
 
@@ -43,9 +59,10 @@ export default {
 
       <input class="input-group-text" type="number" v-model="amount" @input="updateAmount">
 
-      <select class="form-select btn btn-outline-light" v-model="selectedCurrencyValue" @change="updateCurrency" >
+      <select class="form-select btn btn-outline-light" v-model="selectedCurrencyValue" @change="updateCurrency">
 
-         <option v-for="(currency, i) in currenciesKeys" :key="currency" :value="currency" :disabled="disabledCurrencies.includes(currency)">
+         <option v-for="(currency, i) in currenciesKeys" :key="currency" :value="currency"
+            :disabled="disabledCurrencies.includes(currency)">
             {{ `${currenciesValues[i]} (${currency})` }}
          </option>
 
