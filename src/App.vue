@@ -4,12 +4,14 @@ import axios from 'axios';
 
 // Import components
 import CurrencyInput from './components/CurrencyInput.vue';
+import CurrencyChart from './components/CurrencyChart.vue';
 
 export default {
 
   components: {
 
     CurrencyInput,
+    CurrencyChart,
 
   },
 
@@ -114,7 +116,7 @@ export default {
 
 <template>
 
-  <main class="container p-5">
+  <main class="container g-2 p-5">
 
     <div class="row g-2 py-3 px-5 border rounded-5">
 
@@ -125,16 +127,22 @@ export default {
       <span class="fs-2 text-white">{{ conversionRate + ' ' + selectedCurrency2 }}</span>
 
       <!-- First Input Group -->
-      <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
+      <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
         :selectedCurrency="selectedCurrency1" v-model:inputAmount="amount1" @input-change="updateAmount1"
         @currency-change="updateCurrency1" :disabledCurrencies="[selectedCurrency2]" />
       <!-- /First Input Group -->
 
       <!-- Second Input Group -->
-      <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
+      <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
         :selectedCurrency="selectedCurrency2" v-model:inputAmount="amount2" @input-change="updateAmount2"
         @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]" />
       <!-- /Second Input Group -->
+
+      <div class="col border rounded-2">
+  
+        <CurrencyChart />
+  
+      </div>
 
     </div>
 
