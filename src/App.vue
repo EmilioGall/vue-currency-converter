@@ -54,7 +54,7 @@ export default {
 
       const response = await axios.get(`https://api.frankfurter.app/latest?base=${curFrom}&symbols=${curTo}`);
 
-      console.log('response', response);
+      // console.log('response', response);
 
       this.conversionRate = response.data.rates[curTo];
 
@@ -140,7 +140,7 @@ export default {
 
       <div class="col border rounded-2">
   
-        <CurrencyChart />
+        <CurrencyChart :selectedCurrency1="selectedCurrency1" :selectedCurrency2="selectedCurrency2"/>
   
       </div>
 
