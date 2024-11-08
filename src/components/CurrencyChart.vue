@@ -3,133 +3,135 @@ import axios from 'axios';
 
 export default {
 
+   // Define the props that can be passed to this component
    props: {
 
-      selectedCurrency1: String,
-      selectedCurrency2: String,
+      selectedCurrency1: String, // First currency selected for conversion
+      selectedCurrency2: String, // Second currency selected for conversion
 
    },
 
    data() {
       return {
 
+         // Initialize currencies with selected props
          currencyFrom: this.selectedCurrency1,
          currencyTo: this.selectedCurrency2,
-         dates: [],
-         changeRates: [],
+         dates: [], // Arrays to hold dates informations
+         changeRates: [], // Arrays to hold change rates informations
 
+         // Series data for the chart
          series: [{
 
-            name: 'Exchange Rate',
-            data: [],
+            name: 'Exchange Rate',  // Name for the series displayed in the chart legend
+            data: [], // Data that will be populated with exchange rates
 
          }],
 
+         // Chart options configuration
          chartOptions: {
 
             chart: {
-               type: 'line',
-               height: 350,
+               type: 'line', // Type of chart
+               height: 350, // Height of the chart in pixels
             },
 
             title: {
-               text: `Exchange rate ${this.selectedCurrency1}/${this.selectedCurrency2}`,
+               text: 'Exchange rate hystory', // Default title for the chart
             },
 
             xaxis: {
-               categories: [],
+               categories: [], // Categories (dates) to be shown on the x-axis
             }
+
          }
 
       };
-   },
-
-   async created() {
-
-      await this.fetchRatesHistory(this.currencyFrom, this.currencyTo);
 
    },
 
+   // Lifecycle hook that runs when the component is created
+   created() {
+
+      // Fetch the exchange rate history as soon as the component is created
+      this.fetchRatesHistory();
+
+   },
+
+   // Methods for handling chart
    methods: {
 
-      async fetchRatesHistory(curFrom, curTo) {
+      // Method to fetch historical exchange rates
+      async fetchRatesHistory() {
 
-         const response = await axios.get(`https://api.frankfurter.app/2024-01-01..?base=${curFrom}&symbols=${curTo}`);
+         try {
 
-         // console.log('responceChart =', response.data.rates);
+            const date = '2024-01-01'; // Example static date for fetching rates
 
-         const test = Object.keys(response.data.rates);
+            // Send a GET request to fetch exchange rates for the specified date
+            const response = await axios.get(`https://api.frankfurter.app/${date}..?base=${this.currencyFrom}&symbols=${this.currencyTo}`);
 
-         this.dates = JSON.parse(JSON.stringify(test));
+            // Process the response data
+            this.processRateData(response.data.rates);
 
-         console.log('dates =', this.dates);
-         
+         } catch (error) {
 
-         const changeRatesObj = Object.values(response.data.rates);
+            // Log error if fetching data fails
+            console.error("Failed to fetch rates:", error);
 
-         this.changeRates = [];
-
-         changeRatesObj.forEach((element, i) => {
-
-            this.changeRates.push(element[curTo]);
-
-         });
-
-         // console.log('changeRates =', this.changeRates, typeof this.changeRates);
-
-         this.updateChartY();
-
-         this.updateChartX();
+         };
 
       },
 
-      updateChartY() {
+      // Method to process the rates returned from the API
+      processRateData(rates) {
 
-         this.series[0].data = [];
+         // Update the dates from the API response
+         this.dates = Object.keys(rates);
 
-         this.changeRates.forEach(element => {
+         // Update the exchange rates from the API response
+         this.changeRates = Object.values(rates).map(rate => rate[this.currencyTo]);
 
-            this.series[0].data.push(element.toString());
-
-         });
-
-         // console.log('AsseY2 =', this.series[0].data, typeof this.series[0].data);
+         // Update the chart data with the newly fetched rates
+         this.updateChartData();
 
       },
 
-      updateChartX() {
+      // Method to update chart data and x-axis categories
+      updateChartData() {
 
-         this.chartOptions.xaxis.categories = [];
+         // Populate the series data for the chart
+         this.series[0].data = this.changeRates.map(rate => rate.toString());
 
-         this.dates.forEach(element => {
-
-            // console.log('element', element, typeof element);
-            
-            this.chartOptions.xaxis.categories.push(element.toString());
-
-         });
-
-         console.log('AsseY1 =', this.chartOptions.xaxis.categories, typeof this.chartOptions.xaxis.categories);
+         // Update the x-axis categories with the dates
+         this.chartOptions.xaxis.categories = this.dates.map(date => date.toString());
 
       },
 
    },
 
+   // Watchers to react to changes in props
    watch: {
 
-      selectedCurrency1(newValue) {
+      // Watch for changes in the [selectedCurrency1 prop] 
+      selectedCurrency1(newCurrency) {
 
-         this.this.currencyFrom = newValue;
+         // Update currencyFrom when [selectedCurrency1 prop] changes
+         this.currencyFrom = newCurrency;
 
-         this.fetchRatesHistory(this.currencyFrom, this.currencyTo);
+         // Fetch updated rates history based on the new currency
+         this.fetchRatesHistory();
 
       },
 
-      selectedCurrency2() {
+      // Watch for changes in the [selectedCurrency2 prop] 
+      selectedCurrency2(newCurrency) {
 
-         this.this.currencyTo = newValue;
+         // Update currencyTo when selectedCurrency2 prop changes
+         this.currencyTo = newCurrency;
 
-         this.fetchRatesHistory(this.currencyFrom, this.currencyTo);
+         // Fetch updated rates history based on the new currency
+         this.fetchRatesHistory();
 
       },
 

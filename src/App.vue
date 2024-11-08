@@ -48,7 +48,7 @@ export default {
     // Method to fetch available currencies from the API
     async fetchCurrencies() {
 
-      // Send a GET request to the currency API
+      // Send a GET request to fetch the supported currencies
       const response = await axios.get('https://api.frankfurter.app/currencies');
 
       // console.log('response', response.data);
@@ -62,7 +62,7 @@ export default {
     // Method to fetch the conversion rate between two currencies
     async fetchConvertionRate(curFrom, curTo) {
 
-      // Send a GET request to get the conversion rate for the selected currencies
+      // Send a GET request to fetch the conversion rate for the selected currencies
       const response = await axios.get(`https://api.frankfurter.app/latest?base=${curFrom}&symbols=${curTo}`);
 
       // console.log('response', response);
@@ -115,8 +115,6 @@ export default {
 
       // Update [selectedCurrency1] with the newly selected currency
       this.selectedCurrency2 = currency;
-
-      console.log('selectedCurrency2 =', this.selectedCurrency2);
 
       // Fetch the conversion rate for the new currency selection
       await this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);

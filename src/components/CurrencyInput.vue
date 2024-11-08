@@ -43,17 +43,17 @@ export default {
    // Watchers to react to changes in props
    watch: {
 
-      // Watch for changes in the [inputAmount prop] and update local [amount]
+      // Watch for changes in the [inputAmount prop]
       inputAmount(newValue) {
 
-         this.amount = newValue; // Update local amount when the prop changes
+         this.amount = newValue; // Update local [amount] when the prop changes
 
       },
 
-      // Watch for changes in the [selectedCurrency prop] and update local [selectedCurrencyValue]
+      // Watch for changes in the [selectedCurrency prop] 
       selectedCurrency(newValue) {
 
-         this.selectedCurrencyValue = newValue; // Update local currency when the prop changes
+         this.selectedCurrencyValue = newValue; // Update local currency [selectedCurrencyValue] when the prop changes
 
       },
 
