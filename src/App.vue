@@ -46,9 +46,6 @@ export default {
     this.debouncedUpdateAmount1 = this.debounce(this.updateAmount1, 500);
     this.debouncedUpdateAmount2 = this.debounce(this.updateAmount2, 500);
 
-    console.log(this.debouncedUpdateAmount1);
-
-
   },
 
   // Methods for the component's functionality

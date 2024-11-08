@@ -19,6 +19,8 @@ export default {
          currencyTo: this.selectedCurrency2, // Currency to which we are converting
          dates: [], // Arrays to hold dates informations
          changeRates: [], // Arrays to hold change rates informations
+         dateTo: new Intl.DateTimeFormat('en-CA').format(new Date()), // Current date formatted
+         monthsAgo: 1, // Initial month offset for historical data
 
          // Series data for the chart
          series: [{
@@ -140,12 +142,13 @@ export default {
 
          try {
 
-            const dateFrom = '2024-10-01'; // Date from which start the time span to fetch
+            // Calculate the date from [monthsAgo] and format it
+            const dateFrom = new Intl.DateTimeFormat('en-CA').format(this.getXMonthsAgo(this.monthsAgo));
 
-            const dateTo = '2024-11-08'; // Date to which start the time span to fetch
+            console.log('dateFrom =', dateFrom);
 
             // Send a GET request to fetch exchange rates for the specified date
-            const response = await axios.get(`https://api.frankfurter.app/${dateFrom}..${dateTo}?base=${this.currencyFrom}&symbols=${this.currencyTo}`);
+            const response = await axios.get(`https://api.frankfurter.app/${dateFrom}..${this.dateTo}?base=${this.currencyFrom}&symbols=${this.currencyTo}`);
 
             // Process the response data
             this.processRateData(response.data.rates);
@@ -182,10 +185,34 @@ export default {
          // Populate the series data for the chart
          this.series[0].data = this.changeRates.map((rate, index) => ({
 
-            x: new Date(this.dates[index]), // Use JavaScript Date object
-            y: rate
+            x: new Date(this.dates[index]), // Using JavaScript Date object, convert date string to Date object
+            y: rate, // Corresponding rate
 
          }));
+
+      },
+
+      // Method to get the date 'x' months ago
+      getXMonthsAgo(x) {
+
+         const date = new Date();
+
+         // Subtract 'x' months from the current month
+         date.setMonth(date.getMonth() - x);
+
+         return date;
+
+      },
+
+      // Method to set a new time span and fetch rates
+      setNewTime(monthsAgo) {
+
+         this.monthsAgo = monthsAgo; // Update monthsAgo value
+
+         // console.log('this.monthsAgo =', this.monthsAgo);
+
+         // Fetch updated rates based on new time span
+         this.fetchRatesHistory();
 
       },
 
@@ -225,6 +252,20 @@ export default {
 
    <!-- Line Chart -->
    <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
+   <!-- /Line Chart -->
+
+   <!-- Dropdown TimeSpan Select -->
+   <select class="form-select btn btn-outline-light" aria-label="TimeSpan Select"
+      @change="setNewTime($event.target.value)">
+
+      <option value="1" selected>Last Month</option>
+      <option value="3">Last Trimester</option>
+      <option value="6">Last Semester</option>
+      <option value="12">Last Year</option>
+      <option value="60">Last 5 Years</option>
+
+   </select>
+   <!-- /Dropdown TimeSpan Select -->
 
 </template>
 
