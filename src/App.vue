@@ -154,7 +154,7 @@ export default {
         @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]" />
       <!-- /Second Input Group -->
 
-      <div class="col border rounded-2">
+      <div class="col">
 
         <CurrencyChart :selectedCurrency1="selectedCurrency1" :selectedCurrency2="selectedCurrency2"/>
 

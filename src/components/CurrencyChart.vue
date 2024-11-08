@@ -1,4 +1,5 @@
 <script>
+// Import Axios
 import axios from 'axios';
 
 export default {
@@ -14,9 +15,8 @@ export default {
    data() {
       return {
 
-         // Initialize currencies with selected props
-         currencyFrom: this.selectedCurrency1,
-         currencyTo: this.selectedCurrency2,
+         currencyFrom: this.selectedCurrency1, // Currency from which we are converting
+         currencyTo: this.selectedCurrency2, // Currency to which we are converting
          dates: [], // Arrays to hold dates informations
          changeRates: [], // Arrays to hold change rates informations
 
@@ -32,19 +32,93 @@ export default {
          chartOptions: {
 
             chart: {
+
                type: 'line', // Type of chart
                height: 350, // Height of the chart in pixels
+               toolbar: {
+                  show: true, // Show toolbar
+               },
+               zoom: {
+                  enabled: true, // Enable zooming functionality
+               },
+               animations: {
+                  enabled: true, // Enable animations
+                  easing: 'easeinout', // Easing function for animations
+                  speed: 800, // Speed of the animations in milliseconds
+               }
+
             },
 
             title: {
+
                text: 'Exchange rate hystory', // Default title for the chart
+               align: 'left', // Alignment of the title
+
             },
 
             xaxis: {
-               categories: [], // Categories (dates) to be shown on the x-axis
-            }
 
-         }
+               categories: [], // Categories (dates) to be shown on the x-axis
+
+            },
+
+            yaxis: {
+
+               title: {
+                  text: 'Value', // Title for the y-axis
+               },
+
+            },
+
+            tooltip: {
+
+               shared: true, // Tooltip configuration
+               intersect: false, // Make tooltips appear even if only one series is hovered
+
+            },
+
+            dataLabels: {
+
+               enabled: false, // Disable data labels on points
+               style: {
+                  colors: ['#fff'], // Colors for data labels
+               },
+               formatter: function (val) {
+                  return val; // Show the value as a label
+               },
+
+            },
+
+            markers: {
+
+               size: 3, // Size of the markers (circles)
+               colors: ['#ff4560'], // Color of the markers
+               strokeColor: ['#fff'], // Color of the marker borders
+               strokeWidth: 1, // Width of the marker borders
+               hover: {
+                  size: 5, // Size of markers when hovered
+               }
+
+            },
+
+            colors: ['#ff4560'], // Set line color
+
+            grid: {
+
+               borderColor: ['#ffffff'], // Color of the grid lines (background)
+
+            },
+
+            stroke: {
+
+               curve: 'straight', // Line curve type
+               width: 2, // Stroke width of the line
+
+            },
+
+            background: ['#ffffff'], // Background color for the chart
+
+         },
 
       };
 
@@ -142,11 +216,8 @@ export default {
 
 <template>
 
-   <div>
-
-      <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
-
-   </div>
+   <!-- Line Chart -->
+   <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
 
 </template>
 
