@@ -47,7 +47,7 @@ export default {
     this.debouncedUpdateAmount2 = this.debounce(this.updateAmount2, 500);
 
     console.log(this.debouncedUpdateAmount1);
-    
+
 
   },
 
@@ -133,6 +133,18 @@ export default {
 
     },
 
+    switchCurrencies() {
+
+      console.log('Clicked');
+
+      const tmpCurrency = this.selectedCurrency2;
+
+      this.selectedCurrency2 = this.selectedCurrency1;
+
+      this.selectedCurrency1 = tmpCurrency;
+
+    },
+
     debounce(functionToCall, waitTime) {
 
       // Define variable for timeout
@@ -167,11 +179,11 @@ export default {
 
   <main class="container g-2 p-5">
 
-    <div class="row g-2 py-3 px-5 border rounded-5">
+    <div class="row justify-content-between g-2 py-3 px-5 border rounded-5">
 
       <h1 class="fs-1 text-center text-white">CURRENCY CONVERTER</h1>
 
-      <div class="col-4 d-flex flex-column">
+      <div class="col-3 d-flex flex-column">
 
         <span class="fs-5 text-white">1,00 {{ selectedCurrency1 }} è uguale a</span>
 
@@ -179,19 +191,42 @@ export default {
 
       </div>
 
-      <div class="col-8 d-flex flex-column gap-2">
+      <div class="col-8">
 
-        <!-- First Input Group for the first currency -->
-        <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
-          :selectedCurrency="selectedCurrency1" v-model:inputAmount="amount1" @input-change="debouncedUpdateAmount1"
-          @currency-change="updateCurrency1" :disabledCurrencies="[selectedCurrency2]" />
-        <!-- /First Input Group -->
+        <div class="container-fluid">
 
-        <!-- Second Input Group for the second currency -->
-        <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
-          :selectedCurrency="selectedCurrency2" v-model:inputAmount="amount2" @input-change="debouncedUpdateAmount2"
-          @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]" />
-        <!-- /Second Input Group -->
+          <div class="row">
+
+            <div class="col-1 d-flex">
+
+              <button class="btn btn-outline-light" @click="switchCurrencies" id="switch">
+
+                <i class="fa-solid fa-repeat"></i>
+
+              </button>
+
+            </div>
+
+            <div class="col-11 d-flex flex-column gap-2">
+
+              <!-- First Input Group for the first currency -->
+              <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
+                :selectedCurrency="selectedCurrency1" v-model:inputAmount="amount1"
+                @input-change="debouncedUpdateAmount1" @currency-change="updateCurrency1"
+                :disabledCurrencies="[selectedCurrency2]" />
+              <!-- /First Input Group -->
+
+              <!-- Second Input Group for the second currency -->
+              <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
+                :selectedCurrency="selectedCurrency2" v-model:inputAmount="amount2"
+                @input-change="debouncedUpdateAmount2" @currency-change="updateCurrency2"
+                :disabledCurrencies="[selectedCurrency1]" />
+              <!-- /Second Input Group -->
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 

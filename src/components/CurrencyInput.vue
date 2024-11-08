@@ -64,7 +64,7 @@ export default {
 
 <template>
 
-   <div class="input-group col-2">
+   <div class="input-group">
 
       <!-- Amount Input Field -->
       <input class="input-group-text" type="number" v-model="amount" @input="updateAmount">

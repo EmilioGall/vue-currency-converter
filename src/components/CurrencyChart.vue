@@ -162,12 +162,8 @@ export default {
       // Method to process the rates returned from the API
       processRateData(rates) {
 
-         console.log('rates =', rates, typeof rates);
-
          // Update the dates from the API response
          this.dates = Object.keys(rates);
-
-         console.log('dates =', this.dates, typeof this.dates);
 
          // Clear previous rates for fresh data
          this.changeRates = [];
