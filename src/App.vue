@@ -24,6 +24,8 @@ export default {
       currenciesValues: [], // Arrays to hold currency names
       amount1: 0, // First currency amount
       amount2: 0, // Second currency amount
+      debouncedUpdateAmount1: null, // Store the debounced function for amount1
+      debouncedUpdateAmount2: null, // Store the debounced function for amount2
       selectedCurrency1: 'EUR', // Default selected first currencies
       selectedCurrency2: 'USD', // Default selected second currencies
       conversionRate: 0, // Default conversion rate from selectedCurrency1 to selectedCurrency2
@@ -39,6 +41,13 @@ export default {
 
     // Fetch the conversion rate for the default selected currencies
     await this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
+
+    // Create debounced versions of the update methods
+    this.debouncedUpdateAmount1 = this.debounce(this.updateAmount1, 500);
+    this.debouncedUpdateAmount2 = this.debounce(this.updateAmount2, 500);
+
+    console.log(this.debouncedUpdateAmount1);
+    
 
   },
 
@@ -124,6 +133,30 @@ export default {
 
     },
 
+    debounce(functionToCall, waitTime) {
+
+      // Define variable for timeout
+      let timeout;
+
+      return function (...args) { // capture arguments passed to the debounced function
+
+        // Clear the previous timer
+        clearTimeout(timeout);
+
+        // Capture context of function
+        const context = this;
+
+        timeout = setTimeout(() => {
+
+          // Execute the function with the correct context
+          functionToCall.apply(context, args);
+
+        }, waitTime);
+
+      };
+
+    },
+
   },
 
 }
@@ -138,25 +171,33 @@ export default {
 
       <h1 class="fs-1 text-center text-white">CURRENCY CONVERTER</h1>
 
-      <span class="fs-5 text-white">1,00 {{ selectedCurrency1 }} è uguale a</span>
+      <div class="col-4 d-flex flex-column">
 
-      <span class="fs-2 text-white">{{ conversionRate + ' ' + selectedCurrency2 }}</span>
+        <span class="fs-5 text-white">1,00 {{ selectedCurrency1 }} è uguale a</span>
 
-      <!-- First Input Group for the first currency -->
-      <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
-        :selectedCurrency="selectedCurrency1" v-model:inputAmount="amount1" @input-change="updateAmount1"
-        @currency-change="updateCurrency1" :disabledCurrencies="[selectedCurrency2]" />
-      <!-- /First Input Group -->
+        <span class="fs-2 text-white">{{ conversionRate + ' ' + selectedCurrency2 }}</span>
 
-      <!-- Second Input Group for the second currency -->
-      <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
-        :selectedCurrency="selectedCurrency2" v-model:inputAmount="amount2" @input-change="updateAmount2"
-        @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]" />
-      <!-- /Second Input Group -->
+      </div>
 
-      <div class="col">
+      <div class="col-8 d-flex flex-column gap-2">
 
-        <CurrencyChart :selectedCurrency1="selectedCurrency1" :selectedCurrency2="selectedCurrency2"/>
+        <!-- First Input Group for the first currency -->
+        <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
+          :selectedCurrency="selectedCurrency1" v-model:inputAmount="amount1" @input-change="debouncedUpdateAmount1"
+          @currency-change="updateCurrency1" :disabledCurrencies="[selectedCurrency2]" />
+        <!-- /First Input Group -->
+
+        <!-- Second Input Group for the second currency -->
+        <CurrencyInput class="col" :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
+          :selectedCurrency="selectedCurrency2" v-model:inputAmount="amount2" @input-change="debouncedUpdateAmount2"
+          @currency-change="updateCurrency2" :disabledCurrencies="[selectedCurrency1]" />
+        <!-- /Second Input Group -->
+
+      </div>
+
+      <div class="col-12 mt-3">
+
+        <CurrencyChart :selectedCurrency1="selectedCurrency1" :selectedCurrency2="selectedCurrency2" />
 
       </div>
 
