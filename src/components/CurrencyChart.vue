@@ -58,22 +58,22 @@ export default {
 
             xaxis: {
 
-               categories: [], // Categories (dates) to be shown on the x-axis
+               type: 'datetime',
 
             },
 
             yaxis: {
 
                title: {
-                  text: 'Value', // Title for the y-axis
+                  text: 'Values', // Title for the y-axis
                },
 
             },
 
             tooltip: {
 
-               shared: true, // Tooltip configuration
-               intersect: false, // Make tooltips appear even if only one series is hovered
+               shared: false, // Tooltip configuration
+               intersect: true, // Make tooltips appear even if only one series is hovered
 
             },
 
@@ -140,10 +140,12 @@ export default {
 
          try {
 
-            const date = '2024-01-01'; // Example static date for fetching rates
+            const dateFrom = '2024-10-01'; // Date from which start the time span to fetch
+
+            const dateTo = '2024-11-08'; // Date to which start the time span to fetch
 
             // Send a GET request to fetch exchange rates for the specified date
-            const response = await axios.get(`https://api.frankfurter.app/${date}..?base=${this.currencyFrom}&symbols=${this.currencyTo}`);
+            const response = await axios.get(`https://api.frankfurter.app/${dateFrom}..${dateTo}?base=${this.currencyFrom}&symbols=${this.currencyTo}`);
 
             // Process the response data
             this.processRateData(response.data.rates);
@@ -160,8 +162,15 @@ export default {
       // Method to process the rates returned from the API
       processRateData(rates) {
 
+         console.log('rates =', rates, typeof rates);
+
          // Update the dates from the API response
          this.dates = Object.keys(rates);
+
+         console.log('dates =', this.dates, typeof this.dates);
+
+         // Clear previous rates for fresh data
+         this.changeRates = [];
 
          // Update the exchange rates from the API response
          this.changeRates = Object.values(rates).map(rate => rate[this.currencyTo]);
@@ -175,10 +184,12 @@ export default {
       updateChartData() {
 
          // Populate the series data for the chart
-         this.series[0].data = this.changeRates.map(rate => rate.toString());
+         this.series[0].data = this.changeRates.map((rate, index) => ({
 
-         // Update the x-axis categories with the dates
-         this.chartOptions.xaxis.categories = this.dates.map(date => date.toString());
+            x: new Date(this.dates[index]), // Use JavaScript Date object
+            y: rate
+
+         }));
 
       },
 
