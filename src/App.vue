@@ -143,6 +143,8 @@ export default {
 
       this.selectedCurrency1 = tmpCurrency;
 
+      this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
+
     },
 
     debounce(functionToCall, waitTime) {
