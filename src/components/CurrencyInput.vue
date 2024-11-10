@@ -67,11 +67,11 @@ export default {
    <div class="input-group">
 
       <!-- Amount Input Field -->
-      <input class="input-group-text" type="number" v-model="amount" @input="updateAmount">
+      <input class="form-control" type="number" placeholder="Enter amount" v-model="amount" @input="updateAmount">
       <!-- /Amount Input Field -->
 
       <!-- Dropdown Currency Select -->
-      <select class="form-select btn btn-outline-light" v-model="selectedCurrencyValue" @change="updateCurrency">
+      <select class="form-select" v-model="selectedCurrencyValue" @change="updateCurrency">
 
          <option v-for="(currency, i) in currenciesKeys" :key="currency" :value="currency"
             :disabled="disabledCurrencies.includes(currency)">
@@ -85,4 +85,16 @@ export default {
 
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.input-group {
+  border-radius: 0.5rem;
+  border: 1px solid #1E88E5;
+}
+.form-control, .form-select {
+  border: 1px solid #1E88E5; /* Colore blu primario */
+}
+.form-control:focus, .form-select:focus {
+  border-color: #FFB74D; /* Colore arancione caldo */
+  box-shadow: 0 0 0 0.2rem rgba(255,183,77,.25); /* Ombra arancione */
+}
+</style>
