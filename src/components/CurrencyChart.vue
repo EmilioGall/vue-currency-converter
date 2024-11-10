@@ -55,7 +55,7 @@ export default {
 
                text: 'Exchange rate hystory', // Default title for the chart
                align: 'left', // Alignment of the title
-
+               
             },
 
             xaxis: {
@@ -99,12 +99,12 @@ export default {
 
             markers: {
 
-               size: 4, // Size of the markers (circles)
+               size: 3, // Size of the markers (circles)
                colors: ['#fff'], // Color of the markers
                strokeColor: ['#1d2b64'], // Color of the marker borders
-               strokeWidth: 3, // Width of the marker borders
+               strokeWidth: 1, // Width of the marker borders
                hover: {
-                  size: 7, // Size of markers when hovered
+                  size: 5, // Size of markers when hovered
                }
 
             },
@@ -113,14 +113,14 @@ export default {
 
             grid: {
 
-               borderColor: ['#BDBDBD'], // Color of the grid lines (background)
+               borderColor: ['#ffffff'], // Color of the grid lines (background)
 
             },
 
             stroke: {
 
                curve: 'straight', // Line curve type
-               width: 3, // Stroke width of the line
+               width: 2, // Stroke width of the line
 
             },
 
@@ -259,11 +259,11 @@ export default {
 <template>
 
    <!-- Line Chart -->
-   <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
+   <apexchart class="px-5 py-3 bg-light rounded bg-opacity-75" type="line" :options="chartOptions" :series="series"></apexchart>
    <!-- /Line Chart -->
 
    <!-- Dropdown TimeSpan Select -->
-   <select class="form-select btn btn-outline-light" aria-label="TimeSpan Select"
+   <select class="form-select btn btn-light mt-3" aria-label="TimeSpan Select"
       @change="setNewTime($event.target.value)">
 
       <option value="1" selected>Last Month</option>
