@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
 
-// Import SASS
-import './scss/general.scss';
-
 // Import Bootstrap
 import "bootstrap";
+
+// Import SASS
+import './scss/general.scss';
 
 // Import ApexChart
 import VueApexCharts from "vue3-apexcharts";

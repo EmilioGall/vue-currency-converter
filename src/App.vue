@@ -132,15 +132,21 @@ export default {
 
     switchCurrencies() {
 
-      console.log('Clicked');
-
       const tmpCurrency = this.selectedCurrency2;
 
       this.selectedCurrency2 = this.selectedCurrency1;
 
       this.selectedCurrency1 = tmpCurrency;
 
-      this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
+      if (this.selectedCurrency1 !== this.selectedCurrency2) {
+
+        this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
+
+      } else {
+
+        console.warn("Cannot fetch rates for the same currency");
+
+      };
 
     },
 
@@ -178,7 +184,7 @@ export default {
 
   <main class="container g-2 p-5">
 
-    <div class="row justify-content-between g-2 py-3 px-5 border rounded-5">
+    <div class="row justify-content-between g-2 py-3 px-5 border rounded-5 bg-custom">
 
       <h1 class="fs-1 text-center text-white">CURRENCY CONVERTER</h1>
 
@@ -241,4 +247,11 @@ export default {
 
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.bg-custom {
+
+  background-color: #1E88E5;
+  /* Blu intenso */
+
+}
+</style>
