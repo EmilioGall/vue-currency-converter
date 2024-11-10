@@ -74,6 +74,12 @@ export default {
 
             tooltip: {
 
+               theme: 'dark',
+               style: {
+                  fontSize: '12px',
+                  background: '#424242',
+                  color: '#ffffff'
+               },
                shared: false, // Tooltip configuration
                intersect: true, // Make tooltips appear even if only one series is hovered
 
@@ -93,28 +99,28 @@ export default {
 
             markers: {
 
-               size: 3, // Size of the markers (circles)
-               colors: ['#ff4560'], // Color of the markers
-               strokeColor: ['#fff'], // Color of the marker borders
-               strokeWidth: 1, // Width of the marker borders
+               size: 4, // Size of the markers (circles)
+               colors: ['#fff'], // Color of the markers
+               strokeColor: ['#1d2b64'], // Color of the marker borders
+               strokeWidth: 3, // Width of the marker borders
                hover: {
-                  size: 5, // Size of markers when hovered
+                  size: 7, // Size of markers when hovered
                }
 
             },
 
-            colors: ['#ff4560'], // Set line color
+            colors: ['#1d2b64'], // Primary color for the line
 
             grid: {
 
-               borderColor: ['#ffffff'], // Color of the grid lines (background)
+               borderColor: ['#BDBDBD'], // Color of the grid lines (background)
 
             },
 
             stroke: {
 
                curve: 'straight', // Line curve type
-               width: 2, // Stroke width of the line
+               width: 3, // Stroke width of the line
 
             },
 
@@ -144,8 +150,6 @@ export default {
 
             // Calculate the date from [monthsAgo] and format it
             const dateFrom = new Intl.DateTimeFormat('en-CA').format(this.getXMonthsAgo(this.monthsAgo));
-
-            console.log('dateFrom =', dateFrom);
 
             // Send a GET request to fetch exchange rates for the specified date
             const response = await axios.get(`https://api.frankfurter.app/${dateFrom}..${this.dateTo}?base=${this.currencyFrom}&symbols=${this.currencyTo}`);
@@ -228,7 +232,9 @@ export default {
          this.currencyFrom = newCurrency;
 
          // Fetch updated rates history based on the new currency
-         this.fetchRatesHistory();
+         if (this.currencyFrom !== this.currencyTo) {
+            this.fetchRatesHistory();
+         }
 
       },
 
@@ -239,7 +245,9 @@ export default {
          this.currencyTo = newCurrency;
 
          // Fetch updated rates history based on the new currency
-         this.fetchRatesHistory();
+         if (this.currencyFrom !== this.currencyTo) {
+            this.fetchRatesHistory();
+         }
 
       },
 
@@ -269,4 +277,9 @@ export default {
 
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+/* Optional additional styles for the dropdown */
+.form-select {
+   background-color: #ffffff;
+}
+</style>
