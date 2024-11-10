@@ -184,7 +184,7 @@ export default {
 
   <main class="container g-2 p-5">
 
-    <div class="row justify-content-between g-2 py-3 px-5 border rounded-5 bg-custom">
+    <div class="row justify-content-between g-2 py-3 px-5 border rounded-4 bg-custom shadow-lg">
 
       <h1 class="fs-1 text-center text-white">CURRENCY CONVERTER</h1>
 
@@ -212,7 +212,7 @@ export default {
 
             </div>
 
-            <div class="col-11 d-flex flex-column gap-2">
+            <div class="col-11 d-flex flex-column gap-2 pe-0">
 
               <!-- First Input Group for the first currency -->
               <CurrencyInput :currenciesKeys="currenciesKeys" :currenciesValues="currenciesValues"
