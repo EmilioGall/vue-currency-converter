@@ -142,6 +142,8 @@ export default {
 
         this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
 
+        this.updateAmount1(this.amount1);
+
       } else {
 
         console.warn("Cannot fetch rates for the same currency");
