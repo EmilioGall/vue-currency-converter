@@ -86,15 +86,5 @@ export default {
 </template>
 
 <style scoped lang="scss">
-.input-group {
-  border-radius: 0.5rem;
-  border: 1px solid #1E88E5;
-}
-.form-control, .form-select {
-  border: 1px solid #1E88E5; /* Colore blu primario */
-}
-.form-control:focus, .form-select:focus {
-  border-color: #FFB74D; /* Colore arancione caldo */
-  box-shadow: 0 0 0 0.2rem rgba(255,183,77,.25); /* Ombra arancione */
-}
+
 </style>
