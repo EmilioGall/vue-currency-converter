@@ -190,7 +190,7 @@ export default {
          this.series[0].data = this.changeRates.map((rate, index) => ({
 
             x: new Date(this.dates[index]), // Using JavaScript Date object, convert date string to Date object
-            y: rate, // Corresponding rate
+            y: rate.toFixed(4), // Corresponding rate
 
          }));
 
