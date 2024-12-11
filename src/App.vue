@@ -192,7 +192,7 @@ export default {
 
       <div class="col-3 d-flex flex-column">
 
-        <span class="fs-5 text-white">1,00 {{ selectedCurrency1 }} è uguale a</span>
+        <span class="fs-5 text-white">1,00 {{ selectedCurrency1 }} is equal to</span>
 
         <span class="fs-2 text-white">{{ conversionRate + ' ' + selectedCurrency2 }}</span>
 
