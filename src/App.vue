@@ -130,7 +130,7 @@ export default {
 
     },
 
-    switchCurrencies() {
+    async switchCurrencies() {
 
       const tmpCurrency = this.selectedCurrency2;
 
@@ -140,7 +140,7 @@ export default {
 
       if (this.selectedCurrency1 !== this.selectedCurrency2) {
 
-        this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
+        await this.fetchConvertionRate(this.selectedCurrency1, this.selectedCurrency2);
 
         this.updateAmount1(this.amount1);
 
